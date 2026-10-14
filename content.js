@@ -74,8 +74,12 @@ const portfolio = {
     { file: "motorcycle-night.jpg", alt: "Rider on a motorcycle at night", caption: "After dark" }
   ],
   email: "tanvechet@gmail.com",
-  phones: ["086 298840", "011 610461"],
-  links: [{ label: "LinkedIn", url: "https://www.linkedin.com/in/tan-vichet-a649331b4/" }]
+  links: [
+    { label: "LinkedIn", url: "https://www.linkedin.com/in/tan-vichet-a649331b4/", icon: "linkedin" },
+    { label: "Facebook", url: "https://www.facebook.com/tan.vichet.14/", icon: "facebook" },
+    { label: "Instagram", url: "https://www.instagram.com/tan_chet/?hl=en", icon: "instagram" },
+    { label: "TikTok", url: "https://www.tiktok.com/@bot_chet4?is_from_webapp=1&sender_device=pc", icon: "tiktok" }
+  ]
 };
 
 const $ = (id) => document.getElementById(id);
@@ -188,8 +192,27 @@ if (portfolio.email) {
 } else {
   const note = document.createElement("span"); note.className = "contact-note"; note.textContent = "Contact details coming soon"; contactLinks.append(note);
 }
-portfolio.phones.forEach((phone) => { const a = document.createElement("a"); a.className = "social-link"; a.href = `tel:${phone.replace(/\s/g, "")}`; a.textContent = phone; contactLinks.append(a); });
-portfolio.links.forEach(({label,url}) => { const a = document.createElement("a"); a.className = "social-link"; a.href = url; a.target = "_blank"; a.rel = "noopener noreferrer"; a.textContent = `${label} ↗`; contactLinks.append(a); });
+const socialIcons = document.createElement("div");
+socialIcons.className = "social-icons";
+socialIcons.setAttribute("aria-label", "Social media");
+const iconMarkup = {
+  linkedin: '<path d="M5.2 8.5v10.3M5.2 5.3v.1M10 18.8V8.5m0 4.5c0-2.7 1.4-4.5 3.8-4.5 2.2 0 3.4 1.3 3.4 3.8v6.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>',
+  facebook: '<path d="M14.2 20V12h2.7l.4-3.1h-3.1V7c0-.9.3-1.5 1.6-1.5h1.7V2.7c-.8-.1-1.6-.2-2.4-.2-2.5 0-4.2 1.5-4.2 4.4v2H8.2V12h2.7v8z" fill="currentColor"/>',
+  instagram: '<rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>',
+  tiktok: '<path d="M14.7 3c.3 2.6 1.9 4.1 4.3 4.3v3.1a8 8 0 0 1-4.3-1.3v5.8c0 3.5-2.2 5.9-5.6 5.9a5.6 5.6 0 0 1-5.6-5.6c0-3.2 2.4-5.5 5.6-5.5.5 0 1 .1 1.4.2v3.2a3 3 0 0 0-1.4-.3 2.4 2.4 0 0 0-2.4 2.4 2.4 2.4 0 0 0 2.4 2.4c1.5 0 2.5-1 2.5-2.7V3z" fill="currentColor"/>'
+};
+portfolio.links.forEach(({label,url,icon}) => {
+  const link = document.createElement("a");
+  link.className = "social-icon";
+  link.href = url;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.setAttribute("aria-label", label);
+  link.title = label;
+  link.innerHTML = `<svg viewBox="0 0 24 24" width="23" height="23" aria-hidden="true" focusable="false">${iconMarkup[icon]}</svg>`;
+  socialIcons.append(link);
+});
+contactLinks.append(socialIcons);
 
 // ---- Motion: matrix rain, text decode, scroll reveal, count-up ----
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

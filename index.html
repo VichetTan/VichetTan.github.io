@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#e92347" />
+  <meta name="description" content="Tan Vichet is a senior full-stack engineer building enterprise systems and digital workflows." />
+  <title>Tan Vichet — Senior Full-Stack Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Back to top"><span id="brand-name">Portfolio</span><span class="brand-period">.</span></a>
+      <nav aria-label="Primary navigation">
+        <a href="#top">Home</a><a href="#about">About</a><a href="#career">Experience</a><a href="#work">Portfolio</a><a href="#hobbies">Hobbies</a><a href="#contact">Contact</a>
+      </nav>
+      <a class="top-cta" href="#contact">Let’s talk <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-main">
+          <div class="eyebrow">Hello, I'm</div>
+          <h1 id="hero-title"><span id="first-name">Your Name</span><span class="period">.</span></h1>
+          <p class="hero-role" id="hero-role">Senior Full-Stack Engineer.</p>
+          <p class="hero-copy" id="hero-copy">A portfolio of selected work, experience, and the ideas behind them.</p>
+          <div class="hero-actions"><a class="button primary" href="#work">View my work <span aria-hidden="true">↗</span></a><a class="button secondary" href="https://www.linkedin.com/in/tan-vichet-a649331b4/" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a></div>
+        </div>
+        <div class="hero-side"><img src="assets/portrait.jpg" alt="Tan Vichet smiling outdoors" /><span class="hero-photo-caption">TAN VICHET · BEYOND THE CODE</span></div>
+        <div class="hero-footer"><span>Scroll to explore</span><span class="arrow-down" aria-hidden="true">↓</span><span id="location"></span></div>
+      </section>
+
+      <section class="stack-strip" aria-labelledby="stack-title">
+        <div class="stack-inner">
+          <div class="stack-heading"><div><span class="stack-kicker">THE TOOLS BEHIND THE WORK</span><h2 id="stack-title">Built across the stack<span>.</span></h2></div><span class="stack-hint">16 CORE TOOLS</span></div>
+          <ul class="featured-skills" id="featured-skills" aria-label="Featured technical skills"></ul>
+        </div>
+      </section>
+
+      <section class="section work" id="work" aria-labelledby="work-title">
+        <div class="section-heading"><div><div class="section-kicker">01 / SELECTED WORK</div><h2 id="work-title">Systems with<br><em>measurable impact.</em></h2></div><p id="work-intro">Enterprise platforms and products built across my career.</p></div>
+        <div class="impact-row" aria-label="Selected outcomes"><div><strong>45%</strong><span>less manual CRM workflow time</span></div><div><strong>30%</strong><span>faster refund dispatch</span></div><div><strong>35%</strong><span>faster SQL query response</span></div><div><strong>12h</strong><span>saved weekly on approvals</span></div></div>
+        <div class="project-grid" id="project-grid"></div>
+      </section>
+
+      <section class="section journey" id="career" aria-labelledby="journey-title">
+        <div class="section-heading"><div><div class="section-kicker">02 / EXPERIENCE</div><h2 id="journey-title">Built through<br><em>experience.</em></h2></div><p>From client-facing web products to enterprise platforms and digital transformation.</p></div>
+        <div class="timeline" id="timeline"></div>
+      </section>
+
+      <section class="section about" id="about" aria-labelledby="about-title">
+        <div class="about-label">03 / ABOUT ME</div>
+        <div class="about-content"><div class="about-photo"><img src="assets/hobbies/hiking.jpg" alt="Tan Vichet hiking near a Cambodian flag" loading="lazy" /></div><div class="about-right"><h2 id="about-title">Engineering across<br><em>the full stack.</em></h2><p id="about-copy">I build reliable software for complex business operations.</p><div class="about-details"><div><span class="detail-label">FOCUS</span><span id="focus"></span></div><div><span class="detail-label">EXPERIENCE</span><span id="experience"></span></div><div><span class="detail-label">LOCATION</span><span id="about-location"></span></div></div></div></div>
+        <div class="skills-block"><span class="detail-label">TECHNICAL SKILLS</span><div class="skill-groups" id="skill-groups"></div></div>
+      </section>
+
+      <section class="section education" id="education" aria-labelledby="education-title">
+        <div class="section-heading"><div><div class="section-kicker">04 / EDUCATION & LANGUAGES</div><h2 id="education-title">A broad foundation.<br><em>Built to keep learning.</em></h2></div></div>
+        <div class="education-grid"><div class="education-list" id="education-list"></div><div class="language-list"><span class="detail-label">LANGUAGES</span><div id="language-list"></div></div></div>
+      </section>
+
+      <section class="section hobbies" id="hobbies" aria-labelledby="hobbies-title">
+        <div class="section-heading"><div><div class="section-kicker">05 / BEYOND WORK</div><h2 id="hobbies-title">Life beyond<br><em>the screen.</em></h2></div><p>Movement, exploration, making videos, and a little play.</p></div>
+        <div class="hobby-grid" id="hobby-grid"></div>
+        <div class="gallery-heading"><div><span class="detail-label">PHOTO JOURNAL</span><h3>From the road <em>and beyond.</em></h3></div><p>Click a photo to see it in full.</p></div>
+        <div class="photo-gallery" id="photo-gallery"></div>
+      </section>
+
+      <section class="section contact" id="contact" aria-labelledby="contact-title">
+        <div class="section-kicker">06 / GET IN TOUCH</div><h2 id="contact-title">Have something in mind?<br><em>Let’s connect.</em></h2><p id="contact-copy">I’d love to hear about what you’re working on.</p><div id="contact-links" class="contact-links"></div>
+      </section>
+    </main>
+    <footer><span>© <span id="year"></span> <span id="footer-name">Portfolio</span></span><span>Made with intention.</span><a href="#top">Back to top ↑</a></footer>
+  </div>
+  <script src="content.js"></script>
+</body>
+</html>

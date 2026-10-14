@@ -63,6 +63,8 @@ const portfolio = {
     { name: "Video games", category: "PLAY", icon: "✧" }
   ],
   photos: [
+    { file: "facebook-road-ride.jpg", alt: "Tan Vichet riding a blue sport motorcycle along a tree-lined road", caption: "Open road" },
+    { file: "facebook-portrait.jpg", alt: "Tan Vichet smiling in a casual portrait", caption: "A quieter moment" },
     { file: "motorcycle-blue.jpg", alt: "Rider standing beside a blue sport motorcycle", caption: "Motorcycles" },
     { file: "track-blue-corner.jpg", alt: "Rider leaning a blue motorcycle through a track corner", caption: "Track days" },
     { file: "hiking.jpg", alt: "Hiker on a misty rocky hill near a Cambodian flag", caption: "Hiking" },

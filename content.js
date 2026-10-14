@@ -190,3 +190,98 @@ if (portfolio.email) {
 }
 portfolio.phones.forEach((phone) => { const a = document.createElement("a"); a.className = "social-link"; a.href = `tel:${phone.replace(/\s/g, "")}`; a.textContent = phone; contactLinks.append(a); });
 portfolio.links.forEach(({label,url}) => { const a = document.createElement("a"); a.className = "social-link"; a.href = url; a.target = "_blank"; a.rel = "noopener noreferrer"; a.textContent = `${label} ↗`; contactLinks.append(a); });
+
+// ---- Motion: matrix rain, text decode, scroll reveal, count-up ----
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const glyphs = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン0123456789ABCDEF<>/{}=+*";
+const decodeGlyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&";
+const randomGlyph = (set = glyphs) => set[Math.floor(Math.random() * set.length)];
+
+function matrixRain(host, { color, head, fontSize = 16, speed = 55 }) {
+  const canvas = document.createElement("canvas");
+  canvas.className = "matrix-rain"; canvas.setAttribute("aria-hidden", "true");
+  host.prepend(canvas);
+  const ctx = canvas.getContext("2d");
+  let drops = [], width = 0, height = 0, visible = false, last = 0, frame = 0;
+  const resize = () => {
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    width = host.clientWidth; height = host.clientHeight;
+    canvas.width = width * ratio; canvas.height = height * ratio;
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    drops = Array.from({ length: Math.ceil(width / fontSize) }, () => Math.random() * -height / fontSize);
+  };
+  const draw = (time) => {
+    frame = requestAnimationFrame(draw);
+    if (time - last < speed) return;
+    last = time;
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.fillStyle = "rgba(0,0,0,0.12)"; ctx.fillRect(0, 0, width, height);
+    ctx.globalCompositeOperation = "source-over";
+    ctx.font = `${fontSize}px monospace`;
+    drops.forEach((y, i) => {
+      const x = i * fontSize, py = y * fontSize;
+      ctx.fillStyle = color; ctx.fillText(randomGlyph(), x, py - fontSize);
+      ctx.fillStyle = head; ctx.fillText(randomGlyph(), x, py);
+      drops[i] = py > height && Math.random() > 0.975 ? 0 : y + 1;
+    });
+  };
+  new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    cancelAnimationFrame(frame);
+    if (visible) frame = requestAnimationFrame(draw);
+  }).observe(host);
+  new ResizeObserver(resize).observe(host);
+  resize();
+}
+
+function decode(el, duration = 900) {
+  const target = el.textContent;
+  if (!target.trim()) return;
+  const start = performance.now();
+  const step = (now) => {
+    const progress = Math.min((now - start) / duration, 1);
+    const settled = Math.floor(progress * target.length);
+    el.textContent = [...target].map((ch, i) => (i < settled || ch === " " ? ch : randomGlyph(decodeGlyphs))).join("");
+    if (progress < 1) requestAnimationFrame(step); else el.textContent = target;
+  };
+  requestAnimationFrame(step);
+}
+
+function countUp(el, duration = 1400) {
+  const match = el.textContent.match(/^(\d+)(.*)$/);
+  if (!match) return;
+  const [, value, suffix] = match, end = Number(value), start = performance.now();
+  const step = (now) => {
+    const p = Math.min((now - start) / duration, 1);
+    el.textContent = `${Math.round(end * (1 - Math.pow(1 - p, 3)))}${suffix}`;
+    if (p < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+if (!reduceMotion) {
+  document.body.classList.add("motion");
+  matrixRain(document.querySelector(".hero"), { color: "#ffffff38", head: "#ffffffb0" });
+  matrixRain(document.querySelector(".stack-strip"), { color: "#ed244866", head: "#ff9aac", fontSize: 14 });
+  ["first-name", "hero-role"].forEach((id, i) => setTimeout(() => decode($(id), 1000 + i * 300), 150 + i * 250));
+
+  const revealTargets = document.querySelectorAll(
+    ".section-kicker, .about-label, .section-heading h2, .about h2, .contact h2, .impact-row > div, .project-card, .timeline-item, .skill-group, .education-item, .language-item, .hobby-card, .gallery-photo, .featured-skill"
+  );
+  revealTargets.forEach((el) => {
+    el.classList.add("reveal");
+    const siblings = [...el.parentElement.children].filter((c) => c.classList.contains("reveal"));
+    el.style.setProperty("--reveal-delay", `${Math.min(siblings.indexOf(el), 8) * 70}ms`);
+  });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(({ isIntersecting, target }) => {
+      if (!isIntersecting) return;
+      target.classList.add("revealed");
+      target.addEventListener("transitionend", function done(e) { if (e.target !== target) return; target.removeEventListener("transitionend", done); target.classList.remove("reveal", "revealed"); target.style.removeProperty("--reveal-delay"); });
+      observer.unobserve(target);
+      if (target.matches(".section-kicker, .about-label")) decode(target, 700);
+      if (target.matches(".impact-row > div")) countUp(target.querySelector("strong"));
+    });
+  }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+  revealTargets.forEach((el) => observer.observe(el));
+}
